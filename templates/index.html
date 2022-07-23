@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div>
+    <form class="text-center border border-light p-5" action="/search/1" method="post">
+        {% csrf_token %}
+        <input name="query" class="form-control mb-4" type="text" placeholder="Enter your query" required>
+        <input type="submit" class="btn btn-info btn-block my-4 col-1" value="Submit">
+    </form>
+    <div class="row m-3 p-3">
+        {% for result in results %}
+            {% if result|get_item:"crawled_url" %}
+                <div class="col-4 p-2">
+                </div>
+                <div class="col-8 p-2 text-right">
+                    <h5 class="text-primary" style="float: right">
+                        <a href="{{ result|get_item:"crawled_url" }}">{{ result|get_item:"crawled_url" }}</a>
+                    </h5>
+                </div>
+                <hr>
+            {% else %}
+                <div class="col-4 p-2">
+                    <a href="{{ result|get_item:"thumbnail" }}"><img src="{{ result|get_item:"thumbnail" }}" alt=""
+                                                                     style="width: 50%;height: auto"></a>
+                </div>
+                <div class="col-8 p-2 text-right">
+                    <h5 class="text-primary" style="float: right">
+                        <a href="/content/{{ result|get_item:"id" }}">{{ result|get_item:"title" }}</a>
+                    </h5>
+                    <br>
+                    <div style="float: right" class="col-12 p-0">
+                        <a class="text-success" href="{{ result|get_item:"url" }}">{{ result|get_item:"url" }}</a>
+                    </div>
+                    <br>
+                    <small class="text-dark">
+                        {{ result|get_item:"publish_date" }}
+                    </small>
+                </div>
+                <hr>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="row m-4 p-3">
+        <!--<button class="btn btn-warning col-2 m-2">sort by date</button>-->
+        {% if has_previous %}
+        <form method="post" action="/search/{{ previous_page }}" class="col-2">
+            {% csrf_token %}
+            <input type="hidden" value="{{ query }}" name="query">
+            <input class="btn btn-warning col-11 m-2" type="submit" value="previous page">
+        </form>
+        {% endif %}
+        {% if has_next %}
+        <form method="post" action="/search/{{ next_page }}" class="col-2">
+            {% csrf_token %}
+
+
+            <input type="hidden" value="{{ query }}" name="query">
+            <input class="btn btn-warning col-11 m-2" type="submit" value="next page">
+        </form>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

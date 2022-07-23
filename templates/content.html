@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+            integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If"
+            crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+            src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"
+            integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k"
+            crossorigin="anonymous"></script>
+</head>
+<body dir="rtl">
+<div id="data" class="container text-right col-11 mt-3" phl="{{ content }}">
+</div>
+<h1>مطالب مشابه</h1>
+<div style="color: #ff53f2">
+    {% for x , y in ten_top %}
+    <a href="/content/{{ x }}">{{ y }}</a>
+    <br>
+    {% endfor %}
+</div>
+<script>
+    let data_div = document.getElementById("data");
+    data_div.innerHTML = data_div.getAttribute("phl");
+</script>
+</body>
+</html>
