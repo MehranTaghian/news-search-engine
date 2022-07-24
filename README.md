@@ -8,12 +8,12 @@ environment and run
 ```
 $ pip install -r requirements.txt
 ```
-The version of python used is `3.8.10`. To run the search engine for the first time, issue
+The version of python used is `3.8.10`. Before running the search engine for the first time, issue
 the following command:
 ```
 $ python manage.py migrate
 ```
-for later runs, use the following command
+For running the search engine, use the following command:
 ```
 $ python manage.py runserver
 ```
