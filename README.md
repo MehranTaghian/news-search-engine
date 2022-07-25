@@ -38,6 +38,8 @@ According to Wikipedia, we can have different combinations of weighting schemes 
 The weighting schemes we have implemented are as the following table:
 
 ![](./Images/tf-idf-weighting.png)
+
 *Different weighting scheme for converting documents and queries to vectors*
 
-In this table, $f \ne 2$
+In this table, $f_{t, d}$ is the number of repetitions of the word $t$ in document $d$, $f_{t, q}$ is the repetition of 
+$t$ in query $q$, and $n_t$ is the number of documents containing word $t$.
