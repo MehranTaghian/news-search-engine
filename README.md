@@ -23,23 +23,38 @@ This search engine is designed to retrieve the most relevant documents given a q
 steps of implementation are comprised of 1) indexing and storing documents, 2) querying through documents.
 
 ### Indexing 
-When a document is received, first some preprocessing steps including *Normalization*, *Tokenization*,
-*Stemming*, and Removing stop words is done. Then the document is stored as a vector. For vectorizing, 
-we need to accept a weighting scheme for weighting words within a document. For this purpose, 
+When a document is received, first, some preprocessing steps, including *Normalization*, *Tokenization*,
+*Stemming*and Removing stop words are done. Then the document is stored as a vector. We need to accept a weighting scheme for weighting words within a document and vectorize it. For this purpose, 
 [TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) method is used. 
 
 ### Querying
-When a query is provided by the user, first the query is converted to a vector using the same process as used
+When the user provides a query, the query is converted to a vector using the same process as used
 for documents (TF-IDF). Then the similarity of the query to each document is calculated using the 
 [Cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity). Then, *K* most similar documents to the query
 are returned.
 
-According to Wikipedia, we can have different combinations of weighting schemes for both query and documents. 
-The weighting schemes we have implemented are as the following table:
+According to Wikipedia, we can have different weighting scheme combinations for queries and documents. 
+The weighting schemes we have implemented are as shown in the following table:
 
 ![](./Images/tf-idf-weighting.png)
 
-*Different weighting scheme for converting documents and queries to vectors*
+*Different weighting schemes for converting documents and queries to vectors*
 
 In this table, $f_{t, d}$ is the number of repetitions of the word $t$ in document $d$, $f_{t, q}$ is the repetition of 
 $t$ in query $q$, and $n_t$ is the number of documents containing word $t$.
+
+### Efficient search using Machine Learning techniques
+As discussed, the relevant documents are retrieved based on their Cosine similarity with the query. However, we have a 
+large number of documents, and comparing the query with each document and returning the most relevant ones is not an efficient 
+method. For this reason, we use clustering techniques to cluster the documents and compare each query only to the centers
+of the cluster. The most relevant clusters are then retrieved, and the query is compared to the documents of those clusters.
+For clustering the documents, we need to specify the number of clusters. To do that, we apply the 
+[Residual Sum of Squares (RSS)](https://en.wikipedia.org/wiki/Residual_sum_of_squares) method.
+
+The search can also be done in a specific category of documents. The category should be given in the query by `cat:<category name>`
+To search through the categories, first, we should perform classification over documents. For this purpose, we categorize all
+the News to 8 classes: **Science**, **Culture-Art**, **Politics**, **Economy**, **Social**, **International**, **Sport**, and **Multimedia**.
+Since classification is a supervised method, we require to have labeled data. Therefore, we labeled some documents
+and classified them using the [KNN](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) algorithm.
+
+###  Online crawler
