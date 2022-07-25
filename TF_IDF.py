@@ -214,7 +214,7 @@ def type_three_weighting_scheme(docs, phrasal_terms, simple_terms_tf_query, phra
     return calculate_score_for_docs(tf_idf_table, docs, query_vector)
 
 
-## TODO: why to normalize it eah time
+## TODO: why to normalize it each time
 
 def calculate_score_for_docs(doc_vector, docs, query_vector):
     # Normalize Document Vectors
