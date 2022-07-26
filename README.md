@@ -75,6 +75,9 @@ There are a bunch of problems with the algorithm mentioned above, and many impro
 - How to prevent bombarding a server that should be visited repeatedly?
 - How to launch multiple instances of the crawlers working collaboratively in a distributed manner? The critical part is synchronization.
 - How to properly parse an HTML page? Just remove HTML tags or do further processing?
--,...
+- ,...
 
 As you see, there are a hundred or even thousands of challenging technical problems. Trying to maximize the performance of a part of the crawler as a solution to a problem may reduce the performance of the other part (No free launch!).
+
+The diagram below demonstrates the algorithm that solves some of the problems. The project utilize the algorithm.
+![crawling algorithm](./crawling-algorithm.drawio.png)
