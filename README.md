@@ -58,3 +58,23 @@ Since classification is a supervised method, we require to have labeled data. Th
 and classified them using the [KNN](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) algorithm.
 
 ###  Online crawler
+The most simple algorithm for crawling is as follows:  
+- Define a queue of initial URLs which acts as the seed.
+- forever:
+    - link = queue.front()
+    - queue.pop()
+    - content = GET(link)
+    - Update the index with content
+    - for every sub_link in content that is **unvisited**:
+        - queue.push(sub_link)
+
+There are a bunch of problems with the algorithm mentioned above, and many improvements are available:  
+- How to restart from the last state of the queue after shutting down the crawler?
+- How to property handle duplicated (visited) links?
+- Crawler should visit some web pages repeatedly. For example, a news agency website. How to implement this mechanism? What is the proper rate of visit for each link?
+- How to prevent bombarding a server that should be visited repeatedly?
+- How to launch multiple instances of the crawlers working collaboratively in a distributed manner? The critical part is synchronization.
+- How to properly parse an HTML page? Just remove HTML tags or do further processing?
+-,...
+
+As you see, there are a hundred or even thousands of challenging technical problems. Trying to maximize the performance of a part of the crawler as a solution to a problem may reduce the performance of the other part (No free launch!).
